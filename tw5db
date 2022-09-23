@@ -1,0 +1,45 @@
+import sqlite3
+
+conn=sqlite3.connect("prod.db")
+cur=conn.cursor()
+
+n=int(input("Enter the number of products"))
+for i in range(n):
+    id=int(input("ENter the id of product"))
+    name=input("Enter the name of product")
+    rs=float(input("ENter the price of product"))
+    q=int(input("Enter the quantity of product"))
+
+    cur.execute("insert into product values(:prodID,:name,:price,:quantity)",{
+                'prodID':id,
+                'name':name,
+                'price':rs,
+                'quantity':q
+                })
+    conn.commit()
+
+data=cur.execute("select * from product")
+
+print("------------------------------------------------------------------------------------------------")
+for rows in data:
+    print(rows)
+
+pid=int(input("ENter the id of product to be deleted"))
+cur.execute("delete from product where prodID=:pid",{'pid':pid})
+conn.commit()
+
+
+data=cur.execute("select * from product")
+
+print("------------------------------------------------------------------------------------------------")
+for rows in data:
+    print(rows)
+
+cur.execute("update product set price=price+(price*0.1) where price<50")
+conn.commit()
+
+data=cur.execute("select * from product")
+
+print("------------------------------------------------------------------------------------------------")
+for rows in data:
+    print(rows)
