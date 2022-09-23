@@ -1,0 +1,78 @@
+import csv as csv
+
+def storebooks():
+    with open("book.csv","a",newline="") as file:
+        writer=csv.writer(file)
+        bookno=int(input("Enter the book no"))
+        book_name=input("Enter the book name")
+        author=input("Enter author name")
+        price=int(input("enter the price of book"))
+
+        details=[bookno,book_name,author,price]
+        writer.writerow(details)
+
+def search_book_by_author():
+    with open("book.csv","r",newline="") as file:
+        reader=csv.reader(file)
+        author=input("Enter the name of author")
+        for rows in reader:
+            if rows[2]==author:
+                flag=1
+                print("BOOK NO-"+rows[0]+"TITLE-"+rows[1]+"AUTHOR-"+rows[2]+"PRICE-"+rows[3])
+        if flag==0:
+            print("no books for such author")
+
+def search_book_by_word():
+    with open("book.csv","r",newline="") as file:
+        reader=csv.reader(file)
+        key=input("ENTER KEYWORD TO BE SEARCHED AMONG USERS")
+        for rows in reader:
+            if key in rows[1]:
+                flag=1
+                print("BOOK NO-" + rows[0] + "TITLE-" + rows[1] + "AUTHOR-" + rows[2] + "PRICE-" + rows[3])
+
+        if flag==0:
+            print("BOOK NOT FOUND")
+
+def search_book_by_price():
+    with open("book.csv","r",newline="") as file:
+        reader=csv.reader(file)
+        try:
+            price=int(input("Enter the price of book to be searched"))
+            if price>0:
+                for rows in reader:
+                    if rows[3]==price:
+                        flag=1
+                        print("BOOK NO-" + rows[0] + "TITLE-" + rows[1] + "AUTHOR-" + rows[2] + "PRICE-" + rows[3])
+
+                if flag==0:
+                    print("No book with such price")
+            else:
+                raise ValueError("INVALID PRICE!")
+
+
+        except Exception as error:
+            print(type(error),error)
+
+def main():
+    while True:
+        print("-------------------------------------------------------")
+        print("ENTER 1 TO INSERT BOOK")
+        print("ENTER 2 TO SEARCH BOOK BY AUTHOR")
+        print("ENTER 3 TO SEARCJ BOOK BY PRICE")
+        print("ENTER 4 TO SEARCH BOOK BY WORD")
+        print("ENTER 5 to exit")
+        ch=int(input("\nENTER YOUR CHOICE"))
+        if ch==1:
+            storebooks()
+        if ch==2:
+            search_book_by_author()
+        if ch==3:
+            search_book_by_price()
+        if ch==4:
+            search_book_by_word()
+        if ch==5:
+            exit()
+
+if __name__=="__main__":
+    main()
