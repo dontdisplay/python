@@ -1,0 +1,25 @@
+import pandas as pd
+import numpy as np
+
+data=pd.read_csv("mks.csv")
+
+cols=list(data.columns)
+
+for col in cols:
+    print(col+" ",end="")
+
+attr=input("\nEnter the attr: ")
+
+attrVals=list(data[attr])
+
+uniq=np.unique(attrVals)
+
+print("\nUnique Values are:\n")
+for u in uniq:
+    print(u)
+
+print("\nFrequency of unique values are: \n")
+for u in uniq:
+    print(u, " : ",attrVals.count(u))
+
+print("Totoal number of records: "+str(len(data)))
